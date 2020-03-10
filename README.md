@@ -14,9 +14,10 @@
   - [x] promise
 
 - react
-  - [ ] react16和17生命周期的异同
-  - [ ] hook常见的坑和解决方案
-  - [ ] hook原理
+  - [x] react15和16生命周期的异同
+  - [x] hook原理
+  - [x] capture value特性的产生和解决
+  - [x] React性能优化
   - [ ] virtual-dom原理
   - [ ] 对fiber架构的理解
   - [ ] redux相关
@@ -28,8 +29,8 @@
 - obvious
   - [ ] 背景、总体思路
   - [ ] obvious架构和实现梳理
-
-- 其他日常补充
+  - [ ] react-obvious的实现思路
+  - [ ] cli工具的实现和后续演进计划
 
 ## 网络基础知识
 
