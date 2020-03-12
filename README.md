@@ -18,7 +18,7 @@
   - [x] hook原理
   - [x] capture value特性的产生和解决
   - [x] React性能优化
-  - [ ] virtual-dom原理
+  - [ ] React15挂载和更新原理
   - [ ] 对fiber架构的理解
   - [ ] redux相关
 
