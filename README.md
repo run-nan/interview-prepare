@@ -23,7 +23,7 @@
   - [ ] redux相关
 
 - webpack
-  - [ ] 常见配置
+  - [x] 常见配置
   - [ ] 易混概念辨析
       - [ ] hash和contentHash
       - [ ] path、publicPath和contentPath
@@ -38,7 +38,7 @@
   - [ ] cli工具的实现和后续演进计划
 
 ## 网络基础知识
-- [ ] 浏览器缓存机制
+- [x] 浏览器缓存机制
 - [ ] https原理
 - [ ] 常见的http请求头和状态码
 - [ ] http1.0/http1.1/http2.0的区别
