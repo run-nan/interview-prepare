@@ -101,13 +101,88 @@ http
 ### 常见配置场景
 
 #### 定制请求头
+**语法**： add_header < name > < value >
+**默认值**： none
+**作用域**： http, server, location
+当HTTP应答状态码为 200、204、301、302 或 304 的时候，增加指定的HTTP头标。
+
+#### 设置缓存
+**语法**：expires [time|epoch|max|off]
+**默认值**： expires off
+**作用域**： http, server, location
+使用本指令可以控制HTTP应答中的“Expires”和“Cache-Control”的头标，（起到控制页面缓存的作用）。
+取值：
+- epoch：指定Expires请求头为1 January, 1970, 00:00:01 GMT，即不缓存
+- max：指定Expires请求头为31 December 2037 23:59:59 GMT，即Cache-Control的值为10年。
+- < time >：指定的一个过期时间，如果是负数，则表示不缓存，Cache-Control的值为no-cache，如果为正数，例如 expires 60，表示Cache-Control的值为max-age=60
+- off: 不设置缓存相关请求头
 
 #### 静态伺服
+```conf
+location /assets {
+    # 请求/assets/*，会去/etc/nginx/assets/*下找资源
+    alias /etc/nginx/assets/;
+}
 
+location /assets {
+    # 请求/assets/*， 会去/etc/nginx/assets/*下找资源
+    root /etc/nginx;
+}
+```
 #### 负载均衡
+```conf
+http {
+    upstream backserver {
+        server localhost:3003;
+        server localhost:3004;
+        server localhost:3005;
+    }
+
+    location ^~ /rest/serviceA {
+        # 给代理的请求添加额外请求头
+        proxy_set_header X-Real-IP  $remote_addr;
+        # 反向代理到后端服务器
+        proxy_pass http://backserver;
+    }
+}
+```
+负载均衡策略：
+- 轮询（默认）：
+```conf
+upstream backserver {
+    server localhost:3003;
+    server localhost:3004;
+    server localhost:3005;
+}
+```
+
+- 按权重分配负载：
+```conf
+upstream backserver {
+    server localhost:3003 weight=1;
+    server localhost:3004 weight=2;
+}
+```
+
+- 按健康状况分配负载：
+```conf
+upstream backserver{
+    server 192.168.0.1  max_fails=1 fail_timeout=40s;
+    server 192.168.0.2  max_fails=1 fail_timeout=40s;
+}
+```
+涉及两个配置：
+- fail_timeout : 设定服务器被认为不可用的时间段以及统计失败尝试次数的时间段，默认为10s
+- max_fails : 设定Nginx与服务器通信的尝试失败的次数，默认为：1次
 
 #### Gzip
-
-
-
-
+```conf
+server{
+    gzip on; # 启动
+    gzip_comp_level 1; # 压缩级别，1-10，数字越大压缩的越好, 但是越消耗CPU资源，一般1就够用了
+    gzip_min_length 100; # 不压缩临界值，大于100字节的才压缩，一般不用改
+    gzip_types application/javascript text/css text/html; # 要压缩的文件类型
+    gzip_disable "MSIE [1-6]\."; # IE6对Gzip不友好，对IE6禁用Gzip
+    gzip_vary on; # 增加响应头Vary: Accept-Encoding
+}
+```
