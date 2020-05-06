@@ -58,6 +58,6 @@
 - [x] Nginx
 
 ## 其他
-- [ ] 正则表达式
+- [x] 正则表达式
 - [ ] 原生Ajax
 - [ ] cookie、sessionStorage、localStorage
