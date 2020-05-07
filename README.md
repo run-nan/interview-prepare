@@ -45,13 +45,11 @@
 ## 网络基础
 - [x] 浏览器缓存机制
 - [x] https原理
-- [ ] 常见的http请求头和状态码
-- [ ] http1.0/http1.1/http2.0的区别
-- [ ] TCP连接过程
-- [ ] TCP和UDP的比较
+- [x] 常见的http请求头和状态码
+- [x] http1.0/http1.1/http2.0的区别
+- [x] tcp相关
 - [ ] 输入url之后的完整历程
 - [ ] cookie和session
-- [ ] token和JWT
 
 ## 后端
 - [x] docker
