@@ -1,5 +1,5 @@
 ## 架构
-![](https://user-gold-cdn.xitu.io/2020/3/27/1711c029e8903a26?w=517&h=392&f=png&s=89398)
+![](https://user-gold-cdn.xitu.io/2020/5/11/17203700dfc8277e?w=517&h=392&f=png&s=89398)
 - **Docker三个组件**：
   - Docker Client：以cli的形式让用户可以与docker damon通信
   - Docker Daemon: 运行于主机上，处理client的请求，从本地镜像中拉起并运行容器
@@ -29,20 +29,14 @@
     - *创建容器并启动：*
       `docker run [options] [镜像名] [command]`
       - options:
-        
         -d: 后台运行容器
-
         -p [宿主端口]:[容器端口]: 指定端口映射
-        
         -it: 给容器分配一个输入终端
-        
         -v [宿主目录]:[容器目录]: 指定目录映射
-        
-      - command: 创建容器后要运行的命令
-      
+      - command:
+        创建容器后要运行的命令
     - *创建容器但不启动：*
       `docker create [options] [镜像名] [command]`
-      
       options用法同docker run
   - **启停容器：**
     - *启动容器：* 
@@ -65,34 +59,25 @@
   - **操作容器：**
     - *查看容器列表*：
     `docker ps [options]`
-
       - options:
-      
         -a: 显示所有容器，包括未运行的
     - *获取容器日志*：
     `docker logs [options] [容器名/容器id]`
       - options:
-      
         -f: 跟踪日志输出
-        
         -t：显示时间戳
-        
         --tail=[N]: 列出最新的N条日志
     - *进入容器执行命令*：
       1. 退出后不停止容器：
         `docker exec [options] [容器名/容器id] [command]`
           - options：
-          
-            -it: 给容器分配一个伪终端
-          
-            -d：在后台运行命令
+          -it: 给容器分配一个伪终端
+          -d：在后台运行命令
       2. 退出后停止容器：
         `docker attach [options] [容器名/容器id] [command]`
             - options：
-            
-                -it: 给容器分配一个伪终端
-            
-                -d：在后台运行命令
+            -it: 给容器分配一个伪终端
+            -d：在后台运行命令
     - *宿主机与容器之间的数据拷贝：*
       - 宿主机拷贝到容器：`docker cp [src_path] [容器名/容器id]:[destination_path]`
       - 容器拷贝到宿主机：`docker cp [容器名/容器id]:[destination_path] [src_path]`
@@ -103,18 +88,13 @@
   **根据Dockerfile构建镜像的指令：**
   `docker build [options] [context_path | url]`
   - options:
-  
     -f [Dockerfile路径]：指定Dockerfile路径
-
     -t [镜像名:tag] 设置镜像名
-    
-  - context_path|url: 指定构建时的上下文路径
+  - [context_path | url]: 指定构建时的上下文路径
+    context_path: 宿主机中的某个目录路径
+    url：指定git仓库，docker会自动clone，解压该仓库，并以该仓库根目录作为上下文
 
-    - context_path: 宿主机中的某个目录路径
-
-    - url：指定git仓库，docker会自动clone，解压该仓库，并以该仓库根目录作为上下文
-
-  **Dockerfile中的指令：**
+  **Dockerfile指令：**
   - `FROM [镜像名]:`
   基于某个基础镜像构建一个新镜像
   例：FROM nginx：基于Nginx的镜像构建一个新镜像；FROM scratch：基于空镜像构建一个新镜像
@@ -134,17 +114,44 @@
   >```
   - `COPY [--chown=<user>:<group>] [上下文路径1] [上下文路径2]... [容器内目标路径]`:
   将上下文路径下的文件或目录复制到容器内的目标路径下
-  - `ADD [--chown=<user>:<group>] [上下文路径1] [上下文路径2]... [容器内目标路径]`：
+  - `ADD [--chown=<user>:<group>] [上下文路径1] [上下文路径2]... [容器内目标路径]`
   将上下文路径下的文件或目录复制到容器内的目标路径下（如果要复制的文件是tar压缩包，会自动解压）
-  - `ENV <key>=<value>`：
+  - `ENV <key>=<value>`
   设置环境变量，供容器中运行的进程使用
-  - `ARG <key>=<value>`：
+  - `ARG <key>=<value>`
   设置构建参数，供Dockerfile中使用
-  - `VOLUME ["<容器内路径1>", "<容器内路径2>" ...]`：
+  - `VOLUME ["<容器内路径1>", "<容器内路径2>" ...]`
   将容器内目录挂载到匿名卷
   EXPOSE <端口1> <端口2> ...
   声明要暴露的端口， docker run -P时会随机映射EXPOSE的端口
-  - `WORKDIR <工作目录路径>`：
+  - `WORKDIR <工作目录路径>`
   指定后续指令的工作目录，相当于Dockerfile中的cd指令
-  - `USER <用户名>:<用户组>`：
+  - `USER <用户名>:<用户组>`
   指定后续命令的用户和用户组，相当于Dockerfile中的su命令
+
+#### docker-compose
+docker-compose.yml
+```yaml
+version: '3' # docker compose 版本
+services:
+  app:
+    container_name: app # 指定容器名
+    build: ./app1 # 指定dockerfile的context
+    command: node ./start.js # 用于覆盖dockerfile中默认的CMD
+    ports: # 配置端口映射，相当于docker run -p
+      - "80:80"
+    volumns: # 配置目录映射，相当于docker run -v
+      - "~/.ssh:/home/app/.ssh"
+    depends_on: # 声明依赖的容器，docker-compose up时会按照依赖顺序依次启动容器
+      - redis
+      - db
+    link: # 声明容器之间的连接，声明后容器app可以以db为hostName连接容器db
+      - "db:db"
+  redis:
+    container_name: redis
+    image: redis
+    expose:
+      - "6379"
+  db:
+    ...
+```
