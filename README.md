@@ -24,12 +24,11 @@
 
 - webpack
   - [x] 常见配置
-  - [ ] 易混概念辨析
-      - [ ] hash和contentHash
-      - [ ] path、publicPath和contentPath
-      - [ ] bundle和chunk
-      - [ ] libraryTarget和library
-  - [ ] webpack_require打包原理
+  - [x] 易混概念辨析
+      - [x] hash和contentHash
+      - [x] path、publicPath和contentPath
+      - [x] libraryTarget和library
+  - [ ] webpack_require原理
 
 - obvious
   - [ ] 背景、总体思路
@@ -48,12 +47,14 @@
 - [x] 常见的http请求头和状态码
 - [x] http1.0/http1.1/http2.0的区别
 - [x] tcp相关
-- [ ] 输入url之后的完整历程
 - [ ] cookie和session
+- [ ] 跨域
 
 ## 后端
 - [x] docker
 - [x] Nginx
+- [x] redis
+- [x] 常用Linux命令
 
 ## 其他
 - [x] 正则表达式
