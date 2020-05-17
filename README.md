@@ -26,19 +26,17 @@
   - [x] 常见配置
   - [x] 易混概念辨析
       - [x] hash和contentHash
-      - [x] path、publicPath和contentPath
+      - [x] path、publicPath和contentBase
       - [x] libraryTarget和library
   - [ ] webpack_require原理
 
 - obvious
-  - [ ] 背景、总体思路
-  - [ ] obvious架构和实现梳理
-  - [ ] react-obvious的实现思路
-  - [ ] cli工具的实现和后续演进计划
+  - [x] 背景、总体思路
+  - [x] 架构和实现梳理
 
 ## css
-- [ ] 浮动、定位、BFC
-- [ ] flex
+- [x] 样式优先级、浮动、定位、BFC
+- [ ] 布局 + 居中
 - [ ] 移动端
 
 ## 网络基础
@@ -47,8 +45,8 @@
 - [x] 常见的http请求头和状态码
 - [x] http1.0/http1.1/http2.0的区别
 - [x] tcp相关
-- [ ] cookie和session
-- [ ] 跨域
+- [x] cookie、session和token
+- [x] XSS和CSRF
 
 ## 后端
 - [x] docker
@@ -58,5 +56,4 @@
 
 ## 其他
 - [x] 正则表达式
-- [ ] 原生Ajax
-- [ ] cookie、sessionStorage、localStorage
+- [x] 原生Ajax

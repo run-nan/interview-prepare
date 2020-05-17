@@ -48,3 +48,11 @@ http1.0：Expires、Last-Modified/If-Modified-Since
                               
 ```
 
+#### CORS相关
+- `Access-Control-Allow-Origin`: 
+`Access-Control-Allow-Origin: *`：* 号代表所有网站可以跨域资源共享，如果当前字段为*，那么Access-Control-Allow-Credentials就不能为true
+`Access-Control-Allow-Origin: www.baidu.com`: 指定只有某个域名可以跨域资源共享
+- `Access-Control-Allow-Methods`:
+`Access-Control-Allow-Methods：GET,POST,PUT,DELETE`允许哪些方法来访问
+- `Access-Control-Allow-Credentials`:
+`Access-Control-Allow-Credentials: true`是否允许发送cookie。默认情况下，Cookie不包括在CORS请求之中。设为true，即表示服务器明确许可，Cookie可以包含在请求中，一起发给服务器。这个值也只能设为true，如果服务器不要浏览器发送Cookie，删除该字段即可。如果A`ccess-Control-Allow-Origin`为*，当前字段就不能为true
