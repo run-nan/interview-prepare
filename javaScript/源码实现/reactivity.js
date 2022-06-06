@@ -52,7 +52,7 @@ function effect(cb){
   return rxEffect
 }
 
-/* 依赖收集：建立 数据&cb 映射关系 */
+/* 依赖收集：建立 数据&cb 映射关系 weakMap -> Map -> Set */
 const targetMap = new WeakMap()
 function track(target,key){
   // 存入映射关系
